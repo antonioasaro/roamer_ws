@@ -1,0 +1,1 @@
+ros2 run xacro xacro ./src/gazebo_differential_drive_robot/urdf/robot.xacro > ./src/gazebo_differential_drive_robot/urdf/robot.urdf

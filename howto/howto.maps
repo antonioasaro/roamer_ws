@@ -1,0 +1,1 @@
+ros2 run nav2_map_server map_saver_cli -f ~/roamer_ws/src/gazebo_differential_drive_robot/maps/simple_map

@@ -1,0 +1,1 @@
+ros2 launch gazebo_differential_drive_robot robot.launch.py world:=~/roamer_ws/src/gazebo_differential_drive_robot/worlds/simple.world

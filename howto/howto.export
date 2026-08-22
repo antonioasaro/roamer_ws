@@ -1,0 +1,1 @@
+export GZ_SIM_RESOURCE_PATH=/home/ubuntu/roamer_ws/src/gazebo_differential_drive_robot/models/living_room:$GZ_SIM_RESOURCE_PATH

@@ -1,0 +1,2 @@
+gz sim sdf ./src/gazebo_differential_drive_robot/worlds/simple.sdf 
+
