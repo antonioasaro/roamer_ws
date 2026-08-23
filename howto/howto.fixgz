@@ -1,0 +1,1 @@
+gz model -m differential_drive_robot -l lidar_link
