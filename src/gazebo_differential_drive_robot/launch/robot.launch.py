@@ -133,5 +133,5 @@ def generate_launch_description():
         yaw_arg,
         spawn_model_gazebo_node,
         robot_state_publisher_node,
-        gz_bridge_node,
+        gz_bridge_node
     ])

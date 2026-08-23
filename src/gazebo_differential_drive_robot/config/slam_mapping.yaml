@@ -1,0 +1,29 @@
+/slam_toolbox:
+  ros__parameters:
+    # Solver settings
+    solver_plugin: solver_plugins::CeresSolver
+    ceres_linear_solver: SPARSE_NORMAL_CHOLESKY
+    ceres_preconditioner: SCHUR_JACOBI
+    ceres_trust_strategy: LEVENBERG_MARQUARDT
+    ceres_dogleg_type: TRADITIONAL_DOGLEG
+    ceres_loss_function_type: None
+
+    # TF Frames
+    odom_frame: odom
+    map_frame: map
+    base_frame: base_link
+    scan_topic: /scan
+
+    # Jump Prevention Tuning
+    minimum_score: 0.4                     # Higher = stricter local scan matching
+    loop_match_minimum_response_fine: 0.85 # Higher = accepts only confident loop closures
+    loop_search_space_dimension: 4.0       # Lower = searches closer to robot to avoid bad snaps
+    
+    # Graph update throttling
+    minimum_travel_distance: 0.3          # Only update graph after moving 30cm
+    minimum_travel_heading: 0.3           # Only update graph after rotating 17 degrees
+
+    # General settings
+    use_sim_time: true # Set to false if running on real hardware
+    mode: mapping
+    

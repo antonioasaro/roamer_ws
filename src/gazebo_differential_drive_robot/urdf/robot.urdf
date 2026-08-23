@@ -15,7 +15,7 @@
         <box size="0.3 0.2 0.1"/>
       </geometry>
       <material name="body_material">
-        <color rgba="0.90 0.30 0.00 1.0"/>
+        <color rgba="1.0 0.5 0.00 1.0"/>
       </material>
     </visual>
     <collision>
@@ -185,17 +185,19 @@
       <wheel_separation>0.225</wheel_separation>
       <wheel_radius>0.05</wheel_radius>
       <max_linear_acceleration>10</max_linear_acceleration>
-      <topic>cmd_vel</topic>
-      <tf_topic>tf</tf_topic>
-      <odom_topic>odom</odom_topic>
+      <topic>/cmd_vel</topic>
+      <tf_topic>/tf</tf_topic>
+      <odom_topic>/odom</odom_topic>
       <frame_id>odom</frame_id>
       <odom_publish_frequency>100</odom_publish_frequency>
+      <publish_odom_tf>false</publish_odom_tf>
       <child_frame_id>base_footprint</child_frame_id>
     </plugin>
     <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher">
       <topic>joint_states</topic>
       <joint_name>right_wheel_joint</joint_name>
       <joint_name>left_wheel_joint</joint_name>
+      <update_rate>50</update_rate>
     </plugin>
   </gazebo>
   <!-- Gazebo Harmonic Lidar Plugin -->
