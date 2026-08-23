@@ -1,6 +1,7 @@
 ros-jazzy-ros-gz
 ros-jazzy-ros-gz-sim
 ros-jazzy-ros-gz-bridge
+ros-jazzy-gz-ros2-control
 ros-jazzy-joint-state-publisher
 ros-jazzy-xacro
 ros-jazzy-teleop-twist-keyboard
@@ -8,4 +9,6 @@ ros-jazzy-teleop-twist-joy
 ros-jazzy-navigation2
 ros-jazzy-nav2-bringup
 ros-jazzy-slam-toolbox
+ros-jazzy-ros2-control
+ros-jazzy-ros2-controllers
 
