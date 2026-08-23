@@ -25,4 +25,7 @@
 
     # General settings
     use_sim_time: true # Set to false if running on real hardware
-    mode: mapping
+    ## mode: mapping
+
+    mode: localization # Or lifelong if you want to keep updating it
+    map_file_name: /home/ubuntu/roamer_ws/src/gazebo_differential_drive_robot/maps/simple_map.yaml
