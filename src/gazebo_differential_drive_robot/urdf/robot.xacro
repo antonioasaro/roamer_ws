@@ -253,8 +253,6 @@
         </plugin>
     </gazebo>
 
-    <!-- Gazebo Harmonic Lidar Plugin -->
-<!-- Gazebo Harmonic Sensor Configuration -->
   <gazebo reference="lidar_link">
     <!-- Required: 'gpu_ray' is optimized for Harmonic/Ogre2 -->
     <sensor name="lidar_link" type="gpu_ray">
