@@ -17,6 +17,12 @@ def generate_launch_description():
     xacro_file = os.path.join(pkg_share, 'urdf', 'robot.xacro')
     robot_description_raw = xacro.process_file(xacro_file).toxml()
     
+    gz_bridge_params_path = os.path.join(
+        get_package_share_directory('gazebo_differential_drive_robot'),
+        'config',
+        'gz_bridge.yaml'
+    )
+    
     world_arg = DeclareLaunchArgument(
         'world',
         default_value='empty.sdf',
@@ -75,10 +81,21 @@ def generate_launch_description():
         )
     )
 
+    gz_bridge_node = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=[
+            '--ros-args', '-p',
+            f'config_file:={gz_bridge_params_path}'
+        ],
+        output='screen'
+    )
+    
     return LaunchDescription([
         node_robot_state_publisher,
         gazebo,
         gz_spawn_entity,
         joint_broad_spawner,
-        delay_diff_drive
+        delay_diff_drive,
+        gz_bridge_node    
     ])

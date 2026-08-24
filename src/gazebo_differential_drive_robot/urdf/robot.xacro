@@ -264,31 +264,31 @@
         <visualize>true</visualize>
         <ray>
             <scan>
-            <horizontal>
-                <samples>360</samples>
-                <resolution>1</resolution>
-                <min_angle>-3.14159</min_angle>
-                <max_angle>3.14159</max_angle>
-            </horizontal>
-            <!-- Explicitly force a single vertical slice for 2D operation -->
-            <vertical>
-                <samples>1</samples>
-                <resolution>1</resolution>
-                <min_angle>0.0</min_angle>
-                <max_angle>0.0</max_angle>
-            </vertical>
-            </scan>
+                <horizontal>
+                    <samples>360</samples>
+                    <resolution>1</resolution>
+                    <min_angle>-3.14159</min_angle>
+                    <max_angle>3.14159</max_angle>
+                </horizontal>
+                <!-- Explicitly force a single vertical slice for 2D operation -->
+                <vertical>
+                    <samples>1</samples>
+                    <resolution>1</resolution>
+                    <min_angle>0.0</min_angle>
+                    <max_angle>0.0</max_angle>
+                </vertical>
+                </scan>
             <range>
-            <min>0.12</min>
-            <max>12.0</max>
-            <resolution>0.01</resolution>
-            </range>
+                <min>0.12</min>
+                <max>12.0</max>
+                <resolution>0.01</resolution>
+                </range>
             <!-- Optional noise modeling mimicking real-world data -->
             <noise>
-            <type>gaussian</type>
-            <mean>0.0</mean>
-            <stddev>0.01</stddev>
-            </noise>
+                <type>gaussian</type>
+                <mean>0.0</mean>
+                <stddev>0.01</stddev>
+                </noise>
         </ray>
         <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
             <render_type>ogre2</render_type>
@@ -316,7 +316,7 @@
 
     <gazebo>
         <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-        <parameters>$(find gazebo_differential_drive_robot)/config/ros2_controllers.yaml</parameters>
+            <parameters>$(find gazebo_differential_drive_robot)/config/ros2_controllers.yaml</parameters>
         </plugin>
     </gazebo>
 
