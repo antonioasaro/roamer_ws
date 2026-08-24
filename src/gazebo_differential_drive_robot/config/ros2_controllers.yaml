@@ -19,8 +19,8 @@ diff_drive_controller:
 
     # Odometry and Kinematics Configuration
     write_op_mode: true
-    wheel_separation: 0.40 # Distance between wheels in meters
-    wheel_radius: 0.10     # Radius of wheels in meters
+    wheel_separation: 0.225 # Distance between wheels in meters
+    wheel_radius: 0.05     # Radius of wheels in meters
 
     # Coordinate Frames
     odom_frame_id: odom

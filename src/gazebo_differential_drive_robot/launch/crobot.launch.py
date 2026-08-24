@@ -57,11 +57,14 @@ def generate_launch_description():
         executable='spawner',
         arguments=['joint_state_broadcaster']
     )
-
+    
     diff_drive_spawner = Node(
         package='controller_manager',
         executable='spawner',
-        arguments=['diff_drive_controller']
+        arguments=['diff_drive_controller',
+                   '--controller-ros-args',
+                   '-r /diff_drive_controller/cmd_vel:=/cmd_vel'        
+                   ]
     )
 
     # Delay execution to prevent race conditions during Gazebo initial load

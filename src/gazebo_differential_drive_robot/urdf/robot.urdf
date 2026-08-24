@@ -160,6 +160,21 @@
     <child link="lidar_link"/>
     <axis rpt="0 0 0" xyz="0 1 0"/>
   </joint>
+  <ros2_control name="GazeboSimSystem" type="system">
+    <hardware>
+      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+    </hardware>
+    <joint name="left_wheel_joint">
+      <command_interface name="velocity"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="right_wheel_joint">
+      <command_interface name="velocity"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+  </ros2_control>
   <!-- Gazebo Parameters -->
   <gazebo reference="base_link">
     <mu1>1.0</mu1>
@@ -200,13 +215,16 @@
       <update_rate>50</update_rate>
     </plugin>
   </gazebo>
-  <!-- Gazebo Harmonic Lidar Plugin -->
   <gazebo reference="lidar_link">
-    <sensor name="laser" type="gpu_lidar">
-      <pose>0 0 0 0 0 0</pose>
+    <!-- Required: 'gpu_ray' is optimized for Harmonic/Ogre2 -->
+    <sensor name="lidar_link" type="gpu_ray">
+      <pose relative_to="lidar_link">0 0 0.025 0 0 0</pose>
+      <topic>/scan</topic>
+      <gz_frame_id>lidar_link</gz_frame_id>
+      <update_rate>10.0</update_rate>
+      <always_on>1</always_on>
       <visualize>true</visualize>
-      <update_rate>10</update_rate>
-      <lidar>
+      <ray>
         <scan>
           <horizontal>
             <samples>360</samples>
@@ -214,15 +232,34 @@
             <min_angle>-3.14159</min_angle>
             <max_angle>3.14159</max_angle>
           </horizontal>
+          <!-- Explicitly force a single vertical slice for 2D operation -->
+          <vertical>
+            <samples>1</samples>
+            <resolution>1</resolution>
+            <min_angle>0.0</min_angle>
+            <max_angle>0.0</max_angle>
+          </vertical>
         </scan>
         <range>
-          <min>0.1</min>
+          <min>0.12</min>
           <max>12.0</max>
           <resolution>0.01</resolution>
         </range>
-      </lidar>
-      <topic>scan</topic>
-      <gz_frame_id>lidar_link</gz_frame_id>
+        <!-- Optional noise modeling mimicking real-world data -->
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+        <render_type>ogre2</render_type>
+      </plugin>
     </sensor>
+  </gazebo>
+  <gazebo>
+    <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+      <parameters>/home/ubuntu/roamer_ws/install/gazebo_differential_drive_robot/share/gazebo_differential_drive_robot/config/ros2_controllers.yaml</parameters>
+    </plugin>
   </gazebo>
 </robot>

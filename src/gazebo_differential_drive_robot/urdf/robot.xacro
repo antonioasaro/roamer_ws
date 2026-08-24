@@ -314,12 +314,10 @@
     </sensor>
   </gazebo>
 
-<!--
   <gazebo>
     <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
       <parameters>$(find gazebo_differential_drive_robot)/config/ros2_controllers.yaml</parameters>
     </plugin>
   </gazebo>
--->
 
 </robot>
