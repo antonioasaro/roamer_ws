@@ -58,7 +58,7 @@ def generate_launch_description():
     )
 
     # 5. Controller Spawners
-    joint_broad_spawner = Node(
+    joint_broadcaster_spawner = Node(
         package='controller_manager',
         executable='spawner',
         arguments=['joint_state_broadcaster']
@@ -72,12 +72,26 @@ def generate_launch_description():
                    '-r /diff_drive_controller/cmd_vel:=/cmd_vel'        
                    ]
     )
-
+    
+    imu_sensor_spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=['imu_sensor_broadcaster']
+    )
+    
     # Delay execution to prevent race conditions during Gazebo initial load
     delay_diff_drive = RegisterEventHandler(
         event_handler=OnProcessExit(
-            target_action=joint_broad_spawner,
+            target_action=joint_broadcaster_spawner,
             on_exit=[diff_drive_spawner],
+        )
+    )
+    
+
+    delay_imu_sensor = RegisterEventHandler(
+        event_handler=OnProcessExit(
+            target_action=joint_broadcaster_spawner,
+            on_exit=[imu_sensor_spawner],
         )
     )
 
@@ -95,7 +109,8 @@ def generate_launch_description():
         node_robot_state_publisher,
         gazebo,
         gz_spawn_entity,
-        joint_broad_spawner,
+        joint_broadcaster_spawner,
         delay_diff_drive,
+        delay_imu_sensor,
         gz_bridge_node    
     ])

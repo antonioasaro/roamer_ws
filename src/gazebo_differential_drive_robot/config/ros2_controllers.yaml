@@ -10,6 +10,8 @@ controller_manager:
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
+    imu_sensor_broadcaster:
+      type: imu_sensor_broadcaster/ImuSensorBroadcaster      
 
 # Differential Drive Controller Configuration
 diff_drive_controller:
@@ -53,3 +55,24 @@ diff_drive_controller:
         has_acceleration_limits: true
         max_acceleration: 4.0    # rad/s^2
 
+# IMU Sensor Broadcaster Configuration
+imu_sensor_broadcaster:
+  ros__parameters:
+    sensor_name: "imu_sensor"
+    frame_id: "imu_link"
+    orientation_covariance: [
+      0.001, 0.0,   0.0,
+      0.0,   0.001, 0.0,
+      0.0,   0.0,   0.001
+    ]
+    angular_velocity_covariance: [
+      0.002, 0.0,   0.0,
+      0.0,   0.002, 0.0,
+      0.0,   0.0,   0.002
+    ]
+    linear_acceleration_covariance: [
+      0.04,  0.0,   0.0,
+      0.0,   0.04,  0.0,
+      0.0,   0.0,   0.04
+    ]
+    
