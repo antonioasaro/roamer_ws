@@ -122,6 +122,17 @@
       <origin rpy="0 0 0" xyz="0 0 0"/>
     </inertial>
   </link>
+  <link name="camera_link">
+    <visual>
+      <geometry>
+        <box size="0.025 0.05 0.05"/>
+      </geometry>
+      <material name="camera_material">
+        <color rgba="1.0 0.0 0.0 1.0"/>
+      </material>
+    </visual>
+  </link>
+  <link name="camera_link_optical"/>
   <!-- Joints -->
   <!-- Base Link Joint -->
   <joint name="base_link_joint" type="fixed">
@@ -155,26 +166,21 @@
   </joint>
   <!-- Lidar Joint (fixed) -->
   <joint name="lidar_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.049999999999999996 0 0.05"/>
+    <origin rpy="0 0 0" xyz="0 0 0.05"/>
     <parent link="base_link"/>
     <child link="lidar_link"/>
     <axis rpt="0 0 0" xyz="0 1 0"/>
   </joint>
-  <ros2_control name="GazeboSimSystem" type="system">
-    <hardware>
-      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
-    </hardware>
-    <joint name="left_wheel_joint">
-      <command_interface name="velocity"/>
-      <state_interface name="position"/>
-      <state_interface name="velocity"/>
-    </joint>
-    <joint name="right_wheel_joint">
-      <command_interface name="velocity"/>
-      <state_interface name="position"/>
-      <state_interface name="velocity"/>
-    </joint>
-  </ros2_control>
+  <joint name="camera_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="camera_link"/>
+    <origin rpy="0 0 0" xyz="0.15 0 0.0125"/>
+  </joint>
+  <joint name="camera_optical_joint" type="fixed">
+    <parent link="camera_link"/>
+    <child link="camera_link_optical"/>
+    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0"/>
+  </joint>
   <!-- Gazebo Parameters -->
   <gazebo reference="base_link">
     <mu1>1.0</mu1>
@@ -192,29 +198,32 @@
     <mu1>0.000001</mu1>
     <mu2>0.000001</mu2>
   </gazebo>
-  <!-- Gazebo Plugins -->
-  <gazebo>
-    <plugin filename="gz-sim-diff-drive-system" name="gz::sim::systems::DiffDrive">
-      <right_joint>right_wheel_joint</right_joint>
-      <left_joint>left_wheel_joint</left_joint>
-      <wheel_separation>0.225</wheel_separation>
-      <wheel_radius>0.05</wheel_radius>
-      <max_linear_acceleration>10</max_linear_acceleration>
-      <topic>/cmd_vel</topic>
-      <tf_topic>/tf</tf_topic>
-      <odom_topic>/odom</odom_topic>
-      <frame_id>odom</frame_id>
-      <odom_publish_frequency>100</odom_publish_frequency>
-      <publish_odom_tf>false</publish_odom_tf>
-      <child_frame_id>base_footprint</child_frame_id>
-    </plugin>
-    <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher">
-      <topic>joint_states</topic>
-      <joint_name>right_wheel_joint</joint_name>
-      <joint_name>left_wheel_joint</joint_name>
-      <update_rate>50</update_rate>
-    </plugin>
-  </gazebo>
+  <!-- Gazebo plugins -->
+  <!--
+    <gazebo>
+        <plugin filename="gz-sim-diff-drive-system" name="gz::sim::systems::DiffDrive">
+            <right_joint>right_wheel_joint</right_joint>
+            <left_joint>left_wheel_joint</left_joint>
+            <wheel_separation>${wheel_separation}</wheel_separation>
+            <wheel_radius>${wheel_radius}</wheel_radius>
+            <max_linear_acceleration>${max_linear_acceleration}</max_linear_acceleration>
+            <topic>/cmd_vel</topic>
+            <tf_topic>/tf</tf_topic>
+            <odom_topic>/odom</odom_topic>
+            <frame_id>odom</frame_id>
+            <odom_publish_frequency>100</odom_publish_frequency>
+            <publish_odom_tf>false</publish_odom_tf>
+            <child_frame_id>base_footprint</child_frame_id>
+        </plugin>
+
+        <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher">
+            <topic>joint_states</topic>
+            <joint_name>right_wheel_joint</joint_name>
+            <joint_name>left_wheel_joint</joint_name>
+            <update_rate>50</update_rate>
+        </plugin>
+    </gazebo>
+    -->
   <gazebo reference="lidar_link">
     <!-- Required: 'gpu_ray' is optimized for Harmonic/Ogre2 -->
     <sensor name="lidar_link" type="gpu_ray">
@@ -257,6 +266,42 @@
       </plugin>
     </sensor>
   </gazebo>
+  <gazebo reference="camera_link">
+    <sensor name="camera" type="camera">
+      <pose> 0 0 0 0 0 0 </pose>
+      <visualize>true</visualize>
+      <update_rate>10</update_rate>
+      <camera>
+        <horizontal_fov>1.089</horizontal_fov>
+        <image>
+          <format>R8G8B8</format>
+          <width>640</width>
+          <height>480</height>
+        </image>
+        <clip>
+          <near>0.05</near>
+          <far>8.0</far>
+        </clip>
+      </camera>
+      <topic>camera/image_raw</topic>
+      <gz_frame_id>camera_link_optical</gz_frame_id>
+    </sensor>
+  </gazebo>
+  <ros2_control name="GazeboSimSystem" type="system">
+    <hardware>
+      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+    </hardware>
+    <joint name="left_wheel_joint">
+      <command_interface name="velocity"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="right_wheel_joint">
+      <command_interface name="velocity"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+  </ros2_control>
   <gazebo>
     <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
       <parameters>/home/ubuntu/roamer_ws/install/gazebo_differential_drive_robot/share/gazebo_differential_drive_robot/config/ros2_controllers.yaml</parameters>
