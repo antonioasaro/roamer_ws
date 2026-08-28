@@ -5,6 +5,8 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
+        - /RobotModel1
+        - /RobotModel1/Status1
         - /Map1/Topic1
       Splitter Ratio: 0.5
     Tree Height: 140
@@ -264,7 +266,7 @@ Visualization Manager:
   Global Options:
     Background Color: 48; 48; 48
     Fixed Frame: map
-    Frame Rate: 30
+    Frame Rate: 28
   Name: root
   Tools:
     - Class: rviz_default_plugins/Interact

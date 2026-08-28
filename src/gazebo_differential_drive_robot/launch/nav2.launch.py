@@ -99,7 +99,7 @@ def generate_launch_description():
 
     declare_map_yaml_cmd = DeclareLaunchArgument(
         'map', 
-        default_value='os.path.join(pkg_share_dir, 'maps', 'simple_map.yaml')', 
+        default_value=os.path.join(pkg_share_dir, 'maps', 'simple_map.yaml'), 
         description='Full path to map yaml file to load'
     )
 
