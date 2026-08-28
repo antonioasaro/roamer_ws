@@ -1,1 +1,1 @@
-ros2 run rqt_graph rqt_graph
+rqt_graph

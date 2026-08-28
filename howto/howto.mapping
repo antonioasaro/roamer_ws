@@ -1,1 +1,1 @@
-ros2 launch slam_toolbox online_async_launch.py params:=/home/ubuntu/roamer_ws/src/gazebo_differential_drive_robot/config/slam_mapping.yaml use_sim_time:=True
+ros2 launch slam_toolbox online_async_launch.py params:=/home/ubuntu/roamer_ws/src/gazebo_differential_drive_robot/config/slam_mapping.yaml use_sim_time:=true

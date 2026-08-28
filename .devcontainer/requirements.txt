@@ -11,4 +11,3 @@ ros-jazzy-nav2-bringup
 ros-jazzy-slam-toolbox
 ros-jazzy-ros2-control
 ros-jazzy-ros2-controllers
-ros-jazzy-twist-stamper
