@@ -1,117 +1,100 @@
 import os
-import xacro
-from ament_index_python.packages import get_package_share_directory
 
+from sympy import true
+from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
-from launch.substitutions import LaunchConfiguration
+from launch.actions import IncludeLaunchDescription, RegisterEventHandler, DeclareLaunchArgument
+from launch.event_handlers import OnProcessExit
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
-
+from launch.substitutions import LaunchConfiguration
+import xacro
 
 def generate_launch_description():
-    # Define the robot's name and package name
-    robot_name = "differential_drive_robot"
-    package_name = "gazebo_differential_drive_robot"
-
-    # Define a launch argument for the world file, defaulting to "empty.sdf"
+    pkg_share = get_package_share_directory('gazebo_differential_drive_robot')
+    
+    # 1. Parse Xacro
+    xacro_file = os.path.join(pkg_share, 'urdf', 'robot.xacro')
+    robot_description_raw = xacro.process_file(xacro_file).toxml()
+    
+    gz_bridge_params_path = os.path.join(
+        get_package_share_directory('gazebo_differential_drive_robot'),
+        'config',
+        'gz_bridge.yaml'
+    )
+    
     world_arg = DeclareLaunchArgument(
         'world',
         default_value='empty.sdf',
         description='Specify the world file for Gazebo (e.g., empty.sdf)'
     )
-
-    # Define launch arguments for initial pose
-    x_arg = DeclareLaunchArgument(
-        'x', default_value='0.0', description='Initial X position')
-
-    y_arg = DeclareLaunchArgument(
-        'y', default_value='1.0', description='Initial Y position')
-
-    z_arg = DeclareLaunchArgument(
-        'z', default_value='0.5', description='Initial Z position')
-
-    roll_arg = DeclareLaunchArgument(
-        'R', default_value='0.0', description='Initial Roll')
-
-    pitch_arg = DeclareLaunchArgument(
-        'P', default_value='0.0', description='Initial Pitch')
-
-    yaw_arg = DeclareLaunchArgument(
-        'Y', default_value='0.0', description='Initial Yaw')
-
-    # Retrieve launch configurations
     world_file = LaunchConfiguration('world')
-    x = LaunchConfiguration('x')
-    y = LaunchConfiguration('y')
-    z = LaunchConfiguration('z')
-    roll = LaunchConfiguration('R')
-    pitch = LaunchConfiguration('P')
-    yaw = LaunchConfiguration('Y')
-
-    # Set paths to Xacro model and configuration files
-    robot_model_path = os.path.join(
-        get_package_share_directory(package_name),
-        'urdf',
-        'robot.xacro'
+    
+    # 2. Robot State Publisher
+    node_robot_state_publisher = Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        output='screen',
+        parameters=[{'robot_description': robot_description_raw, 'use_sim_time': True}]
     )
 
-    gz_bridge_params_path = os.path.join(
-        get_package_share_directory(package_name),
-        'config',
-        'gz_bridge.yaml'
+    # 3. Gazebo Sim Launch
+    gazebo = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(
+            get_package_share_directory('ros_gz_sim'), 'launch', 'gz_sim.launch.py')]),
+            launch_arguments={
+                'gz_args': [f'-r -v 4 ', world_file],
+                'on_exit_shutdown': 'true'
+            }.items()
+        #launch_arguments={'gz_args': '-r empty.sdf'}.items()
     )
 
-    # Process the Xacro file to generate the URDF representation of the robot
-    robot_description = xacro.process_file(robot_model_path).toxml()
+    # 4. Spawn Entity
+    gz_spawn_entity = Node(
+        package='ros_gz_sim',
+        executable='create',
+        arguments=['-topic', 'robot_description', '-name', 'differential_drive_robot'],
+        output='screen'
+    )
 
-    # Prepare to include the Gazebo simulation launch file
-    gazebo_pkg_launch = PythonLaunchDescriptionSource(
-        os.path.join(
-            get_package_share_directory('ros_gz_sim'),
-            'launch',
-            'gz_sim.launch.py'
+    # 5. Controller Spawners
+    joint_broadcaster_spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=['joint_state_broadcaster']
+    )
+    
+    diff_drive_spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=['diff_drive_controller',
+                   '--controller-ros-args',
+                   '-r /diff_drive_controller/cmd_vel:=/cmd_vel'        
+                   ]
+    )
+    
+    imu_sensor_spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=['imu_sensor_broadcaster']
+    )
+    
+    # Delay execution to prevent race conditions during Gazebo initial load
+    delay_diff_drive = RegisterEventHandler(
+        event_handler=OnProcessExit(
+            target_action=joint_broadcaster_spawner,
+            on_exit=[diff_drive_spawner],
+        )
+    )
+    
+
+    delay_imu_sensor = RegisterEventHandler(
+        event_handler=OnProcessExit(
+            target_action=joint_broadcaster_spawner,
+            on_exit=[imu_sensor_spawner],
         )
     )
 
-    # Include the Gazebo launch description with specific arguments
-    gazebo_launch = IncludeLaunchDescription(
-        gazebo_pkg_launch,
-        launch_arguments={
-            'gz_args': [f'-r -v 4 ', world_file],
-            'on_exit_shutdown': 'true'
-        }.items()
-    )
-
-    # Create a node to spawn the robot model in the Gazebo environment
-    spawn_model_gazebo_node = Node(
-        package='ros_gz_sim',
-        executable='create',
-        arguments=[
-            '-name', robot_name,
-            '-string', robot_description,
-            '-x', x,
-            '-y', y,
-            '-z', z,
-            '-R', roll,
-            '-P', pitch,
-            '-Y', yaw,
-            '-allow_renaming', 'false'
-        ],
-        output='screen',
-    )
-
-    # Create a node to publish the robot's state based on its URDF description
-    robot_state_publisher_node = Node(
-        package='robot_state_publisher',
-        executable='robot_state_publisher',
-        parameters=[
-            {'robot_description': robot_description, 'use_sim_time': True}
-        ],
-        output='screen'
-    )
-        
-    # Create a node for the ROS-Gazebo bridge to handle message passing
     gz_bridge_node = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
@@ -121,17 +104,13 @@ def generate_launch_description():
         ],
         output='screen'
     )
-
+    
     return LaunchDescription([
-        world_arg,
-        gazebo_launch,
-        x_arg,
-        y_arg,
-        z_arg,
-        roll_arg,
-        pitch_arg,
-        yaw_arg,
-        spawn_model_gazebo_node,
-        robot_state_publisher_node,
-        gz_bridge_node
+        node_robot_state_publisher,
+        gazebo,
+        gz_spawn_entity,
+        joint_broadcaster_spawner,
+        delay_diff_drive,
+        delay_imu_sensor,
+        gz_bridge_node    
     ])

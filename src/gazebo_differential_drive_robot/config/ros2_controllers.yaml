@@ -35,7 +35,7 @@ diff_drive_controller:
 
     # Command Timeouts
     cmd_vel_timeout: 300.0 # Stop if no command received for 0.5s
-    use_stamped_vel: true # Set to true if subscribing to TwistStamped
+    use_stamped_vel: false
 
     # Remap topics if needed (Optional)
     # publish_rate: 50.0

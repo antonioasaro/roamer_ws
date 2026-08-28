@@ -1,1 +1,1 @@
-ros2 launch nav2_bringup bringup_launch.py params_file:=/home/ubuntu/roamer_ws/src/gazebo_differential_drive_robot/config/nav2_params.yaml map:=/home/ubuntu/roamer_ws/src/gazebo_differential_drive_robot/maps/simple_map.yaml use_sim_time:=true
+ros2 launch gazebo_differential_drive_robot nav2.launch.py params_file:=/home/ubuntu/roamer_ws/src/gazebo_differential_drive_robot/config/nav2_params.yaml map:=/home/ubuntu/roamer_ws/src/gazebo_differential_drive_robot/maps/simple_map.yaml use_sim_time:=true
