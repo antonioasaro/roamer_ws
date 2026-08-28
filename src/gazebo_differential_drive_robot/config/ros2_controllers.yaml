@@ -19,8 +19,9 @@ diff_drive_controller:
     # Joint mapping (must match URDF joint names)
     left_wheel_names: ["left_wheel_joint"]
     right_wheel_names: ["right_wheel_joint"]
-    enable_odom_tf: true
-
+    publish_odom: false
+    enable_odom_tf: false
+    
     # Odometry and Kinematics Configuration
     write_op_mode: true
     wheel_separation: 0.225 # Distance between wheels in meters
@@ -34,7 +35,7 @@ diff_drive_controller:
 
     # Command Timeouts
     cmd_vel_timeout: 10.0 # Stop if no command received for 0.5s
-    use_stamped_vel: false # Set to true if subscribing to TwistStamped
+    use_stamped_vel: true # Set to true if subscribing to TwistStamped
 
     # Remap topics if needed (Optional)
     # publish_rate: 50.0
