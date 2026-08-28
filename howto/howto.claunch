@@ -1,1 +1,0 @@
-ros2 launch gazebo_differential_drive_robot crobot.launch.py world:=/home/ubuntu/roamer_ws/src/gazebo_differential_drive_robot/worlds/simple.world use_sim_time:=true
