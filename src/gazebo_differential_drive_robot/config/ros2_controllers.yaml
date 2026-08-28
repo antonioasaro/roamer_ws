@@ -11,7 +11,7 @@ controller_manager:
       type: joint_state_broadcaster/JointStateBroadcaster
 
     imu_sensor_broadcaster:
-      type: imu_sensor_broadcaster/ImuSensorBroadcaster      
+      type: imu_sensor_broadcaster/IMUSensorBroadcaster      
 
 # Differential Drive Controller Configuration
 diff_drive_controller:
@@ -19,6 +19,7 @@ diff_drive_controller:
     # Joint mapping (must match URDF joint names)
     left_wheel_names: ["left_wheel_joint"]
     right_wheel_names: ["right_wheel_joint"]
+    enable_odom_tf: true
 
     # Odometry and Kinematics Configuration
     write_op_mode: true
@@ -60,19 +61,5 @@ imu_sensor_broadcaster:
   ros__parameters:
     sensor_name: "imu_sensor"
     frame_id: "imu_link"
-    orientation_covariance: [
-      0.001, 0.0,   0.0,
-      0.0,   0.001, 0.0,
-      0.0,   0.0,   0.001
-    ]
-    angular_velocity_covariance: [
-      0.002, 0.0,   0.0,
-      0.0,   0.002, 0.0,
-      0.0,   0.0,   0.002
-    ]
-    linear_acceleration_covariance: [
-      0.04,  0.0,   0.0,
-      0.0,   0.04,  0.0,
-      0.0,   0.0,   0.04
-    ]
+
     
