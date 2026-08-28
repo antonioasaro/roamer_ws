@@ -22,7 +22,7 @@ def generate_launch_description():
         name='ekf_filter_node',
         output='screen',
         parameters=[
-            '/home/ubuntu/roamer_ws/src/gazebo_differential_drive_robot/config/ekf.yaml',
+            '/home/ubuntu/roamer_ws/src/gazebo_differential_drive_robot/config/ekf_params.yaml',
             {'use_sime_time': use_sim_time}
             ],
         remappings=[('/imu/data', '/imu_state_broadcaster/imu')]
