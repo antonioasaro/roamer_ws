@@ -35,7 +35,6 @@ from nav2_common.launch import ReplaceString, RewrittenYaml
 def generate_launch_description():
     # Get the launch directory
     bringup_dir = get_package_share_directory('nav2_bringup')
-    pkg_share_dir = get_package_share_directory('gazebo_differential_drive_robot')
     launch_dir = os.path.join(bringup_dir, 'launch')
 
     # Create the launch configuration variables
@@ -98,9 +97,7 @@ def generate_launch_description():
     )
 
     declare_map_yaml_cmd = DeclareLaunchArgument(
-        'map', 
-        default_value=os.path.join(pkg_share_dir, 'maps', 'simple_map.yaml'), 
-        description='Full path to map yaml file to load'
+        'map', default_value='', description='Full path to map yaml file to load'
     )
 
     declare_use_localization_cmd = DeclareLaunchArgument(
@@ -110,13 +107,13 @@ def generate_launch_description():
 
     declare_use_sim_time_cmd = DeclareLaunchArgument(
         'use_sim_time',
-        default_value='True',
+        default_value='false',
         description='Use simulation (Gazebo) clock if true',
     )
 
     declare_params_file_cmd = DeclareLaunchArgument(
         'params_file',
-        default_value=os.path.join(pkg_share_dir, 'config', 'nav2_params.yaml'),
+        default_value=os.path.join(bringup_dir, 'params', 'nav2_params.yaml'),
         description='Full path to the ROS2 parameters file to use for all launched nodes',
     )
 
