@@ -1,1 +1,1 @@
-ros2 launch gazebo_differential_drive_robot ekf.launch.py use_sim_time:=true
+ros2 launch gazebo_differential_drive_robot ekf.launch.py use_sim_time:=True

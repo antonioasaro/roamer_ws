@@ -13,7 +13,7 @@
 #- ros_topic_name: "odom"
 #  gz_topic_name: "odom"
 #  ros_type_name: "nav_msgs/msg/Odometry"
-# gz_type_name: "gz.msgs.Odometry"
+#  gz_type_name: "gz.msgs.Odometry"
 #  direction: "GZ_TO_ROS"
 
 - ros_topic_name: "tf"
@@ -41,19 +41,19 @@
   direction: "GZ_TO_ROS"    
 
 - ros_topic_name: "/camera/image"
-  topic_name: "/camera/image"
+  gz_topic_name: "/camera/image"
   ros_type_name: "sensor_msgs/msg/Image"
   gz_type_name: "gz.msgs.Image"
   direction: "GZ_TO_ROS"
   
 - ros_topic_name: "/camera/camera_info"
-  topic_name: "/camera/camera_info"
+  gz_topic_name: "/camera/camera_info"
   ros_type_name: "sensor_msgs/msg/CameraInfo"
   gz_type_name: "gz.msgs.CameraInfo"
   direction: "GZ_TO_ROS"
 
 - ros_topic_name: "/imu"
   gz_topic_name: "/imu"
-  ros_type: "sensor_msgs/msg/Imu"
-  gz_type: "gz.msgs.IMU"
+  ros_type_name: "sensor_msgs/msg/Imu"
+  gz_type_name: "gz.msgs.IMU"
   direction: GZ_TO_ROS  
