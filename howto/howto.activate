@@ -1,0 +1,4 @@
+ros2 lifecycle set /controller_server activate
+ros2 lifecycle set /planner_server activate
+ros2 lifecycle set /bt_navigator activate
+
