@@ -3,7 +3,7 @@ import os
 from sympy import true
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription, RegisterEventHandler, DeclareLaunchArgument
+from launch.actions import IncludeLaunchDescription, RegisterEventHandler, DeclareLaunchArgument, TimerAction
 from launch.event_handlers import OnProcessExit
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
@@ -31,11 +31,16 @@ def generate_launch_description():
     world_file = LaunchConfiguration('world')
     
     # 2. Robot State Publisher
-    node_robot_state_publisher = Node(
-        package='robot_state_publisher',
-        executable='robot_state_publisher',
-        output='screen',
-        parameters=[{'robot_description': robot_description_raw, 'use_sim_time': True}]
+    delayed_robot_state_publisher = TimerAction(
+        period=1.0,
+        actions=[
+            Node(
+              package='robot_state_publisher',
+              executable='robot_state_publisher',
+              output='screen',
+              parameters=[{'robot_description': robot_description_raw, 'use_sim_time': True}]
+            )
+        ]
     )
 
     # 3. Gazebo Sim Launch
@@ -87,7 +92,6 @@ def generate_launch_description():
         )
     )
     
-
     delay_imu_sensor = RegisterEventHandler(
         event_handler=OnProcessExit(
             target_action=joint_broadcaster_spawner,
@@ -106,11 +110,11 @@ def generate_launch_description():
     )
     
     return LaunchDescription([
-        node_robot_state_publisher,
         gazebo,
-        gz_spawn_entity,
+        gz_bridge_node,
+        delayed_robot_state_publisher,
         joint_broadcaster_spawner,
+        gz_spawn_entity,
         delay_diff_drive,
-        delay_imu_sensor,
-        gz_bridge_node    
+        delay_imu_sensor
     ])
