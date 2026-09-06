@@ -5,7 +5,8 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /Map1
+        - /Status1
+        - /Odometry1/Topic1
       Splitter Ratio: 0.5
     Tree Height: 179
   - Class: rviz_common/Selection
@@ -154,22 +155,23 @@ Visualization Manager:
       Show Names: false
       Tree:
         map:
-          odom:
-            base_footprint:
-              base_link:
-                camera_link:
-                  camera_link_optical:
-                    {}
-                caster_link:
+          {}
+        odom:
+          base_footprint:
+            base_link:
+              camera_link:
+                camera_link_optical:
                   {}
-                imu_link:
-                  {}
-                left_wheel_link:
-                  {}
-                lidar_link:
-                  {}
-                right_wheel_link:
-                  {}
+              caster_link:
+                {}
+              imu_link:
+                {}
+              left_wheel_link:
+                {}
+              lidar_link:
+                {}
+              right_wheel_link:
+                {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -220,13 +222,13 @@ Visualization Manager:
         Filter size: 10
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /global_costmap/costmap
+        Value: /map
       Update Topic:
         Depth: 5
         Durability Policy: Volatile
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /global_costmap/costmap_updates
+        Value: /map_updates
       Use Timestamp: false
       Value: true
     - Angle Tolerance: 0.10000000149011612
@@ -245,7 +247,7 @@ Visualization Manager:
           Color: 204; 51; 204
           Scale: 1
           Value: true
-        Value: true
+        Value: false
       Enabled: true
       Keep: 100
       Name: Odometry
@@ -266,7 +268,7 @@ Visualization Manager:
         Filter size: 10
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /odom
+        Value: /odometry/filtered
       Value: true
     - Alpha: 1
       Buffer Length: 1
@@ -342,7 +344,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 10
+      Distance: 10.266493797302246
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -357,10 +359,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.2703982591629028
+      Pitch: 1.3053982257843018
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.8904001712799072
+      Yaw: 3.9053988456726074
     Saved: ~
 Window Geometry:
   Displays:

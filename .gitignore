@@ -46,3 +46,5 @@ install/
 abc.*
 .vscode/browse.vc.*
 
+frames_2026-*.gv
+frames_2026-*.pdf

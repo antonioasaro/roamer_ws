@@ -27,3 +27,9 @@
     use_sim_time: true # Set to false if running on real hardware
     mode: localization # Or lifelong if you want to keep updating it
     map_file_name: /home/ubuntu/roamer_ws/src/gazebo_differential_drive_robot/maps/simple_map.yaml
+    map_start_pose: [0.0, 0.0, 0.0] # Starting pose of the robot in the map frame
+
+    # Node behavior
+    transform_publish_period: 0.05 # 20Hz transform updates for map->odom
+    transform_timeout: 0.2
+    tf_buffer_duration: 30.0

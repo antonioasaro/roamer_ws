@@ -47,7 +47,7 @@ ekf_filter_node:
 
 
     # SENSOR INPUT 1: IMU DATA
-    imu0: /imu_state_broadcaster/imu  #We are using namespaced topics, hence 'robotname/topic'
+    imu0: /imu_sensor_broadcaster/imu  #We are using namespaced topics, hence 'robotname/topic'
     imu0_config: [false, false, false,
                   true,  true,  true,
                   false, false, false,

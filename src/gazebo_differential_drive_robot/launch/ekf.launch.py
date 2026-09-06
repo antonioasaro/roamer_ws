@@ -1,34 +1,65 @@
+"""
+Launch the robot_localization EKF node.
+
+This launch file starts the Extended Kalman Filter (EKF) node from the
+robot_localization package, which fuses odometry and IMU data to produce
+a filtered, more accurate odometry estimate.
+"""
+
+import os
+from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
-import os
-from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
-    pkg_share = get_package_share_directory('gazebo_differential_drive_robot')
+    """Generate the launch description for the EKF node."""
     
-    use_sim_time = LaunchConfiguration('use_sim_time')
+    # Get the path to the package's share directory
+    pkg_gazebo_differential_drive_robot = get_package_share_directory('gazebo_differential_drive_robot')
+    
+    # --- EKF Configuration File ---
+    ekf_config_path_sim = os.path.join(pkg_gazebo_differential_drive_robot, 'config', 'ekf_params.yaml')
 
-    use_sim_time_arg = DeclareLaunchArgument(
+
+    # --- Declare Launch Arguments ---
+
+    declare_ekf_param_file_cmd = DeclareLaunchArgument(
+        'ekf_param_file',
+        default_value=ekf_config_path_sim,
+        description='Full path to the EKF parameter file (non-namespaced)'
+    )
+
+    # This argument is passed in from the parent gazebo.launch.py file
+    declare_use_sim_time_cmd = DeclareLaunchArgument(
         'use_sim_time',
         default_value='true',
         description='Use simulation (Gazebo) clock if true'
     )
 
-    efk_node = Node(
+    # ================== Start EKF Node =================== #
+
+    # When NOT using namespace
+    start_ekf_node = Node(
         package='robot_localization',
         executable='ekf_node',
-        name='ekf_filter_node',
+        name='ekf_filter_node', # The node name is still unique
         output='screen',
+        # namespace=LaunchConfiguration('robot_name'), # <-- REMOVED: Run node in global namespace
         parameters=[
-            '/home/ubuntu/roamer_ws/src/gazebo_differential_drive_robot/config/ekf_params.yaml',
-            {'use_sime_time': use_sim_time}
-            ]
+            LaunchConfiguration('ekf_param_file'),
+            {'use_sim_time': LaunchConfiguration('use_sim_time')}
+        ],
     )
-    
-    return LaunchDescription([
-        use_sim_time_arg,
-        efk_node
-    ])
-    
+
+
+    # --- Create Launch Description ---
+    ld = LaunchDescription()
+
+    # Add actions to the launch description
+    ld.add_action(declare_use_sim_time_cmd)
+    ld.add_action(declare_ekf_param_file_cmd)
+    ld.add_action(start_ekf_node)
+
+    return ld

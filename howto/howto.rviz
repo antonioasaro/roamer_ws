@@ -1,1 +1,1 @@
-ros2 run rviz2 rviz2 -d ~/roamer_ws/src/gazebo_differential_drive_robot/rviz2/default.rviz --ros-args -p use_sim_time:=True
+ros2 run rviz2 rviz2 -d ~/roamer_ws/src/gazebo_differential_drive_robot/rviz2/default.rviz --ros-args -p use_sim_time:=true
