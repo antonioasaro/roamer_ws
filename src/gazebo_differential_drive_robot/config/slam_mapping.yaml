@@ -26,4 +26,3 @@
     # General settings
     use_sim_time: true # Set to false if running on real hardware
     mode: mapping
-    

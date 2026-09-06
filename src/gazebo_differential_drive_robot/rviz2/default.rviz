@@ -155,23 +155,22 @@ Visualization Manager:
       Show Names: false
       Tree:
         map:
-          {}
-        odom:
-          base_footprint:
-            base_link:
-              camera_link:
-                camera_link_optical:
+          odom:
+            base_footprint:
+              base_link:
+                camera_link:
+                  camera_link_optical:
+                    {}
+                caster_link:
                   {}
-              caster_link:
-                {}
-              imu_link:
-                {}
-              left_wheel_link:
-                {}
-              lidar_link:
-                {}
-              right_wheel_link:
-                {}
+                imu_link:
+                  {}
+                left_wheel_link:
+                  {}
+                lidar_link:
+                  {}
+                right_wheel_link:
+                  {}
       Update Interval: 0
       Value: true
     - Alpha: 1
