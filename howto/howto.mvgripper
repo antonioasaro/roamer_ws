@@ -1,0 +1,1 @@
+ros2 action send_goal /gripper_controller/gripper_cmd control_msgs/action/ParallelGripperCommand "{command: {position: [0.01], velocity: [0.0], effort: [10.0]}}"

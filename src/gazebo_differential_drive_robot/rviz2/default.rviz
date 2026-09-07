@@ -90,7 +90,17 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        gripper_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         imu_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_finger:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -101,6 +111,21 @@ Visualization Manager:
           Show Trail: false
           Value: true
         lidar_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_finger:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -135,15 +160,25 @@ Visualization Manager:
           Value: true
         caster_link:
           Value: true
+        gripper_base:
+          Value: true
         imu_link:
+          Value: true
+        left_finger:
           Value: true
         left_wheel_link:
           Value: true
         lidar_link:
           Value: true
+        link_1:
+          Value: true
+        link_2:
+          Value: true
         map:
           Value: true
         odom:
+          Value: true
+        right_finger:
           Value: true
         right_wheel_link:
           Value: true
@@ -168,6 +203,13 @@ Visualization Manager:
                   {}
                 lidar_link:
                   {}
+                link_1:
+                  link_2:
+                    gripper_base:
+                      left_finger:
+                        {}
+                      right_finger:
+                        {}
                 right_wheel_link:
                   {}
       Update Interval: 0
@@ -342,25 +384,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 14.423685073852539
+      Distance: 6.919107437133789
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0
-        Y: 0
-        Z: 0
+        X: -0.04220256209373474
+        Y: 0.05208640918135643
+        Z: -5.9960490034427494e-05
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.5697963237762451
+      Pitch: 0.994796872138977
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 2.7153990268707275
+      Yaw: 2.7953951358795166
     Saved: ~
 Window Geometry:
   Displays:

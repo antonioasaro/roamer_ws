@@ -1,0 +1,9 @@
+ros2 topic pub --once /arm_controller/joint_trajectory trajectory_msgs/msg/JointTrajectory "{
+  joint_names: [joint_1, joint_2],
+  points: [
+    {
+      positions: [1.0, 0.5],
+      time_from_start: {sec: 2, nanosec: 0}
+    }
+  ]
+}"
