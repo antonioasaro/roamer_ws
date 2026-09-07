@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: gazebo_differential_drive_robot
+    relative_path: urdf/robot.xacro
+  srdf:
+    relative_path: config/differential_drive_robot.srdf
+  package_settings:
+    author_name: Antonio Asaro
+    author_email: antonio.asaro.ca@gmail.com
+    generated_timestamp: 1788811136
