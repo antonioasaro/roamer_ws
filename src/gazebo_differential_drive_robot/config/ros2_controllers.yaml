@@ -17,7 +17,7 @@ controller_manager:
       type: joint_trajectory_controller/JointTrajectoryController
 
     gripper_controller:
-      type: gripper_action_controller/GripperActionController
+      type: parallel_gripper_action_controller/GripperActionController
 
 # Differential Drive Controller Configuration
 diff_drive_controller:
@@ -84,9 +84,7 @@ arm_controller:
 # Configure the Gripper Controller
 gripper_controller:
   ros__parameters:
-    joints: 
-      - left_finger_joint  
-      - right_finger_joint
+    joint: left_finger_joint  
     state_interfaces:
       - position
       - velocity

@@ -84,6 +84,18 @@ def generate_launch_description():
         arguments=['imu_sensor_broadcaster']
     )
     
+    arm_controller_spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=['arm_controller']
+    )
+    
+    gripper_controller_spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=['gripper_controller']
+    )
+
     # Delay execution to prevent race conditions during Gazebo initial load
     delay_diff_drive = RegisterEventHandler(
         event_handler=OnProcessExit(
@@ -96,6 +108,20 @@ def generate_launch_description():
         event_handler=OnProcessExit(
             target_action=joint_broadcaster_spawner,
             on_exit=[imu_sensor_spawner],
+        )
+    )
+    
+    delay_arm_controller = RegisterEventHandler(
+        event_handler=OnProcessExit(
+            target_action=joint_broadcaster_spawner,
+            on_exit=[arm_controller_spawner],
+        )
+    )
+
+    delay_gripper_controller = RegisterEventHandler(
+        event_handler=OnProcessExit(
+            target_action=joint_broadcaster_spawner,
+            on_exit=[gripper_controller_spawner],
         )
     )
 
@@ -116,5 +142,7 @@ def generate_launch_description():
         joint_broadcaster_spawner,
         gz_spawn_entity,
         delay_diff_drive,
-        delay_imu_sensor
+        delay_imu_sensor,
+        delay_arm_controller,
+        delay_gripper_controller
     ])
