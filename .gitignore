@@ -48,3 +48,4 @@ abc.*
 
 frames_2026-*.gv
 frames_2026-*.pdf
+src/gazebo_differential_drive_robot/urdf/robot.urdf
