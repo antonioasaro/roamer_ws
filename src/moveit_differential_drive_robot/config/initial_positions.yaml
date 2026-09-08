@@ -1,0 +1,7 @@
+# Default initial positions for differential_drive_robot's ros2_control fake system
+
+initial_positions:
+  joint_1: 0
+  joint_2: 0
+  left_finger_joint: 0
+  virtual_joint: 0
