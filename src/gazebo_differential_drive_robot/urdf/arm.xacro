@@ -4,11 +4,8 @@
   <!-- ==================== Arm Links & Joints ==================== -->
   <xacro:property name="arm_offset" value="${body_length/2 - caster_radius}"/>
 
-  <joint name="virtual_joint" type="planar">
-    <command_interface name="position"/>
-    <state_interface name="position"/>
-    <state_interface name="velocity"/>
-  </joint>
+  <!-- Virtual Joint -->
+  <virtual_joint name="virtual_joint" type="planar" parent_frame="odom" child_link="base_footprint" />
 
   <!-- Shoulder Joint (Rotation around Z) -->
   <joint name="joint_1" type="revolute">
@@ -93,7 +90,7 @@
 
   <!-- ==================== Gripper Fingers ==================== -->
   <!-- Left Finger (Prismatic Active Joint) -->
-<!-- The main active joint controlled by the gripper plugin -->
+  <!-- The main active joint controlled by the gripper plugin -->
   <joint name="left_finger_joint" type="prismatic">
     <parent link="gripper_base"/>
     <child link="left_finger"/>

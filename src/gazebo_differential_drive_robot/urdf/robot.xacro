@@ -406,6 +406,12 @@
         <hardware>
             <plugin>gz_ros2_control/GazeboSimSystem</plugin>
         </hardware>
+      
+        <joint name="virtual_joint">
+            <command_interface name="position"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
 
         <joint name="left_wheel_joint">
             <command_interface name="velocity"/>
