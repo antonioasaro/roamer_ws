@@ -4,9 +4,6 @@
   <!-- ==================== Arm Links & Joints ==================== -->
   <xacro:property name="arm_offset" value="${body_length/2 - caster_radius}"/>
 
-  <!-- Virtual Joint -->
-  <virtual_joint name="virtual_joint" type="planar" parent_frame="odom" child_link="base_footprint" />
-
   <!-- Shoulder Joint (Rotation around Z) -->
   <joint name="joint_1" type="revolute">
     <parent link="base_link"/>

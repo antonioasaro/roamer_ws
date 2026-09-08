@@ -36,7 +36,10 @@ else
     echo "Warning: WORKSPACE variable not set."
 fi
 
+alias lt="ls -lrt"
+alias rm="rm -i"
 alias so="source"
+alias h="history"
 
 # Execute final command
 exec "$@"
