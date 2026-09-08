@@ -4,6 +4,12 @@
   <!-- ==================== Arm Links & Joints ==================== -->
   <xacro:property name="arm_offset" value="${body_length/2 - caster_radius}"/>
 
+  <joint name="virtual_joint" type="planar">
+    <command_interface name="position"/>
+    <state_interface name="position"/>
+    <state_interface name="velocity"/>
+  </joint>
+
   <!-- Shoulder Joint (Rotation around Z) -->
   <joint name="joint_1" type="revolute">
     <parent link="base_link"/>

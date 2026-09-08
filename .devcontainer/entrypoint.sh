@@ -36,5 +36,7 @@ else
     echo "Warning: WORKSPACE variable not set."
 fi
 
+alias so="source"
+
 # Execute final command
 exec "$@"
