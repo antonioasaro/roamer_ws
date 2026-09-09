@@ -59,30 +59,35 @@ def generate_launch_description():
     joint_broadcaster_spawner = Node(
         package="controller_manager",
         executable="spawner",
+        output="screen",        
         arguments=["joint_state_broadcaster", "--controller-manager", "/controller_manager"],
     )
 
     diff_drive_spawner = Node(
         package="controller_manager",
         executable="spawner",
+        output="screen",        
         arguments=["diff_drive_controller", "--controller-manager", "/controller_manager"],
     )
 
     imu_sensor_spawner = Node(
         package='controller_manager',
         executable='spawner',
+        output="screen",
         arguments=['imu_sensor_broadcaster']
     )
 
     arm_controller_spawner = Node(
         package='controller_manager',
         executable='spawner',
+        output="screen",
         arguments=['arm_controller']
     )
    
     gripper_controller_spawner = Node(
         package='controller_manager',
         executable='spawner',
+        output="screen",
         arguments=['gripper_controller']
     )    
     
@@ -117,7 +122,6 @@ def generate_launch_description():
     
     return LaunchDescription([
         generate_demo_launch(moveit_config),
-        robot_state_publisher,
         delay_diff_drive,
         delay_imu_sensor,
         delay_arm_controller,

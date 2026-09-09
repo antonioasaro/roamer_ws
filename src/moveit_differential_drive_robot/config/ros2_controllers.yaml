@@ -33,6 +33,12 @@ diff_drive_controller:
     wheel_separation: 0.225 # Distance between wheels in meters
     wheel_radius: 0.05     # Radius of wheels in meters
 
+    command_interfaces:
+      - velocity
+    state_interfaces:
+      - position
+      - velocity    
+
     # Coordinate Frames
     odom_frame_id: odom
     base_frame_id: base_footprint
