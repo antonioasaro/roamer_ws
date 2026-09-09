@@ -8,7 +8,6 @@
     <!-- Import control_xacro -->
     <xacro:include filename="differential_drive_robot.ros2_control.xacro" />
 
-
-    <xacro:differential_drive_robot_ros2_control name="FakeSystem" initial_positions_file="$(arg initial_positions_file)"/>
+    <!-- <xacro:differential_drive_robot_ros2_control name="FakeSystem" initial_positions_file="$(arg initial_positions_file)"/> -->
 
 </robot>

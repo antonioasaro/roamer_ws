@@ -6,18 +6,14 @@ controller_manager:
     robot_arm_controller:
       type: joint_trajectory_controller/JointTrajectoryController
 
-
     robot_hand_controller:
       type: position_controllers/GripperActionController
-
 
     robot_base_controller:
       type: joint_trajectory_controller/JointTrajectoryController
 
-
     robot_manipulator_controller:
       type: joint_trajectory_controller/JointTrajectoryController
-
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
@@ -29,6 +25,7 @@ controller_manager:
     imu_sensor_broadcaster:
       type: imu_sensor_broadcaster/IMUSensorBroadcaster 
 
+# Robot_arm/hand/base/manipulator controller configurations
 robot_arm_controller:
   ros__parameters:
     joints:
