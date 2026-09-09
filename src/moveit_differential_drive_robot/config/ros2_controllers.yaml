@@ -22,6 +22,13 @@ controller_manager:
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
+    # Define controllers to load
+    diff_drive_controller:
+      type: diff_drive_controller/DiffDriveController
+
+    imu_sensor_broadcaster:
+      type: imu_sensor_broadcaster/IMUSensorBroadcaster 
+
 robot_arm_controller:
   ros__parameters:
     joints:
@@ -59,3 +66,53 @@ robot_manipulator_controller:
       - position
       - velocity
     allow_nonzero_velocity_at_trajectory_end: true
+
+# Differential Drive Controller Configuration
+diff_drive_controller:
+  ros__parameters:
+    # Joint mapping (must match URDF joint names)
+    left_wheel_names: ["left_wheel_joint"]
+    right_wheel_names: ["right_wheel_joint"]
+    enable_odom_tf: false
+    publish_odom: false
+    
+    # Odometry and Kinematics Configuration
+    write_op_mode: true
+    wheel_separation: 0.225 # Distance between wheels in meters
+    wheel_radius: 0.05     # Radius of wheels in meters
+
+    # Coordinate Frames
+    odom_frame_id: odom
+    base_frame_id: base_footprint
+    pose_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.03]
+    twist_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.03]
+
+    # Command Timeouts
+    cmd_vel_timeout: 300.0 # Stop if no command received for 0.5s
+    use_stamped_vel: false
+
+    # Remap topics if needed (Optional)
+    # publish_rate: 50.0
+    # open_loop: false
+
+    # Velocity and Acceleration Limits (Optional but recommended)
+    linear:
+      x:
+        has_velocity_limits: true
+        max_velocity: 1.0        # m/s
+        min_velocity: -1.0       # m/s
+        has_acceleration_limits: true
+        max_acceleration: 2.0    # m/s^2
+    angular:
+      z:
+        has_velocity_limits: true
+        max_velocity: 2.0        # rad/s
+        min_velocity: -2.0       # rad/s
+        has_acceleration_limits: true
+        max_acceleration: 4.0    # rad/s^2
+
+# IMU Sensor Broadcaster Configuration
+imu_sensor_broadcaster:
+  ros__parameters:
+    sensor_name: "imu_sensor"
+    frame_id: "imu_link"
