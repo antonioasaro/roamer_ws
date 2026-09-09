@@ -17,7 +17,7 @@ controller_manager:
       type: joint_trajectory_controller/JointTrajectoryController
 
     robot_hand_controller:
-      type: position_controllers/GripperActionController
+      type: parallel_gripper_action_controller/GripperActionController
 
     robot_base_controller:
       type: joint_trajectory_controller/JointTrajectoryController
@@ -102,7 +102,7 @@ robot_base_controller:
       - position
       - velocity
     allow_nonzero_velocity_at_trajectory_end: true
-    
+
 robot_manipulator_controller:
   ros__parameters:
     joints:

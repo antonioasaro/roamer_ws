@@ -11,6 +11,7 @@ moveit_simple_controller_manager:
 
   robot_arm_controller:
     type: FollowJointTrajectory
+    action_ns: follow_joint_trajectory
     joints:
       - joint_1
       - joint_2
@@ -22,10 +23,12 @@ moveit_simple_controller_manager:
     default: true
   robot_base_controller:
     type: FollowJointTrajectory
+    action_ns: follow_joint_trajectory
     joints:
       - virtual_joint
   robot_manipulator_controller:
     type: FollowJointTrajectory
+    action_ns: follow_joint_trajectory
     joints:
       - virtual_joint
       - joint_1
