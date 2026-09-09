@@ -3,6 +3,16 @@ controller_manager:
   ros__parameters:
     update_rate: 100  # Hz
 
+    # Define controllers to load
+    diff_drive_controller:
+      type: diff_drive_controller/DiffDriveController
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    imu_sensor_broadcaster:
+      type: imu_sensor_broadcaster/IMUSensorBroadcaster 
+
     robot_arm_controller:
       type: joint_trajectory_controller/JointTrajectoryController
 
@@ -14,55 +24,6 @@ controller_manager:
 
     robot_manipulator_controller:
       type: joint_trajectory_controller/JointTrajectoryController
-
-    joint_state_broadcaster:
-      type: joint_state_broadcaster/JointStateBroadcaster
-
-    # Define controllers to load
-    diff_drive_controller:
-      type: diff_drive_controller/DiffDriveController
-
-    imu_sensor_broadcaster:
-      type: imu_sensor_broadcaster/IMUSensorBroadcaster 
-
-# Robot_arm/hand/base/manipulator controller configurations
-robot_arm_controller:
-  ros__parameters:
-    joints:
-      - joint_1
-      - joint_2
-    command_interfaces:
-      - position
-    state_interfaces:
-      - position
-      - velocity
-    allow_nonzero_velocity_at_trajectory_end: true
-robot_hand_controller:
-  ros__parameters:
-    joint: left_finger_joint
-robot_base_controller:
-  ros__parameters:
-    joints:
-      - virtual_joint
-    command_interfaces:
-      - position
-    state_interfaces:
-      - position
-      - velocity
-    allow_nonzero_velocity_at_trajectory_end: true
-robot_manipulator_controller:
-  ros__parameters:
-    joints:
-      - virtual_joint
-      - joint_1
-      - joint_2
-      - left_finger_joint
-    command_interfaces:
-      - position
-    state_interfaces:
-      - position
-      - velocity
-    allow_nonzero_velocity_at_trajectory_end: true
 
 # Differential Drive Controller Configuration
 diff_drive_controller:
@@ -113,3 +74,45 @@ imu_sensor_broadcaster:
   ros__parameters:
     sensor_name: "imu_sensor"
     frame_id: "imu_link"
+
+# Robot_arm/hand/base/manipulator ControllerConfigurations
+robot_arm_controller:
+  ros__parameters:
+    joints:
+      - joint_1
+      - joint_2
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    allow_nonzero_velocity_at_trajectory_end: true
+
+robot_hand_controller:
+  ros__parameters:
+    joint: left_finger_joint
+
+robot_base_controller:
+  ros__parameters:
+    joints:
+      - virtual_joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    allow_nonzero_velocity_at_trajectory_end: true
+    
+robot_manipulator_controller:
+  ros__parameters:
+    joints:
+      - virtual_joint
+      - joint_1
+      - joint_2
+      - left_finger_joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    allow_nonzero_velocity_at_trajectory_end: true
