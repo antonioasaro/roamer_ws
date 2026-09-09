@@ -1,0 +1,4 @@
+alias rmi='rm -i'
+alias lt='ls -lrt'
+alias so='source'
+alias h='history'
