@@ -19,12 +19,6 @@ controller_manager:
     robot_hand_controller:
       type: parallel_gripper_action_controller/GripperActionController
 
-    robot_base_controller:
-      type: joint_trajectory_controller/JointTrajectoryController
-
-    robot_manipulator_controller:
-      type: joint_trajectory_controller/JointTrajectoryController
-
 # Differential Drive Controller Configuration
 diff_drive_controller:
   ros__parameters:

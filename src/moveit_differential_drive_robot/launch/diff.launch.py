@@ -2,6 +2,7 @@ import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import RegisterEventHandler, TimerAction
+from launch.event_handlers import OnProcessExit
 from launch.event_handlers import OnProcessStart
 from launch.actions import ExecuteProcess
 from launch_ros.actions import Node
@@ -55,13 +56,13 @@ def generate_launch_description():
     )
 
     # 5. Spawners for ros2_control
-    joint_state_broadcaster_spawner = Node(
+    joint_broadcaster_spawner = Node(
         package="controller_manager",
         executable="spawner",
         arguments=["joint_state_broadcaster", "--controller-manager", "/controller_manager"],
     )
 
-    diff_drive_controller_spawner = Node(
+    diff_drive_spawner = Node(
         package="controller_manager",
         executable="spawner",
         arguments=["diff_drive_controller", "--controller-manager", "/controller_manager"],
@@ -87,37 +88,36 @@ def generate_launch_description():
     
     # Ensure controllers spawn AFTER the controller manager is up
     delay_diff_drive = RegisterEventHandler(
-        event_handler=OnProcessStart(
-            target_action=controller_manager,
-            on_start=[joint_state_broadcaster_spawner, diff_drive_controller_spawner],
+        event_handler=OnProcessExit(
+            target_action=joint_broadcaster_spawner,
+            on_exit=[diff_drive_spawner],
         )
     )
         
     delay_imu_sensor = RegisterEventHandler(
-        event_handler=OnProcessStart(
-            target_action=controller_manager,
-            on_start=[joint_state_broadcaster_spawner, imu_sensor_spawner],            
+        event_handler=OnProcessExit(
+            target_action=joint_broadcaster_spawner,
+            on_exit=[imu_sensor_spawner],
         )
     )
 
     delay_arm_controller = RegisterEventHandler(
-        event_handler=OnProcessStart(
-            target_action=controller_manager,
-            on_start=[joint_state_broadcaster_spawner, arm_controller_spawner],            
+        event_handler=OnProcessExit(
+            target_action=joint_broadcaster_spawner,
+            on_exit=[arm_controller_spawner],
         )
     )
 
     delay_gripper_controller = RegisterEventHandler(
-        event_handler=OnProcessStart(
-            target_action=controller_manager,
-            on_start=[joint_state_broadcaster_spawner, gripper_controller_spawner],            
+        event_handler=OnProcessExit(
+            target_action=joint_broadcaster_spawner,
+            on_exit=[gripper_controller_spawner],
         )
     )
     
     return LaunchDescription([
         generate_demo_launch(moveit_config),
         robot_state_publisher,
-        move_group_node,
         delay_diff_drive,
         delay_imu_sensor,
         delay_arm_controller,
