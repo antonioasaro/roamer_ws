@@ -6,6 +6,7 @@ from launch.event_handlers import OnProcessStart
 from launch.actions import ExecuteProcess
 from launch_ros.actions import Node
 from moveit_configs_utils import MoveItConfigsBuilder
+from moveit_configs_utils.launches import generate_demo_launch
 import xacro
 
 def generate_launch_description():
@@ -85,7 +86,7 @@ def generate_launch_description():
     )    
     
     # Ensure controllers spawn AFTER the controller manager is up
-    delay_diff_drive_spawner = RegisterEventHandler(
+    delay_diff_drive = RegisterEventHandler(
         event_handler=OnProcessStart(
             target_action=controller_manager,
             on_start=[joint_state_broadcaster_spawner, diff_drive_controller_spawner],
@@ -114,9 +115,10 @@ def generate_launch_description():
     )
     
     return LaunchDescription([
+        generate_demo_launch(moveit_config),
         robot_state_publisher,
         move_group_node,
-        delay_diff_drive_spawner,
+        delay_diff_drive,
         delay_imu_sensor,
         delay_arm_controller,
         delay_gripper_controller
