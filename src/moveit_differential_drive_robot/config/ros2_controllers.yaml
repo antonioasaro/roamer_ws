@@ -91,28 +91,3 @@ robot_arm_controller:
 robot_hand_controller:
   ros__parameters:
     joint: left_finger_joint
-
-robot_base_controller:
-  ros__parameters:
-    joints:
-      - virtual_joint
-    command_interfaces:
-      - position
-    state_interfaces:
-      - position
-      - velocity
-    allow_nonzero_velocity_at_trajectory_end: true
-
-robot_manipulator_controller:
-  ros__parameters:
-    joints:
-      - virtual_joint
-      - joint_1
-      - joint_2
-      - left_finger_joint
-    command_interfaces:
-      - position
-    state_interfaces:
-      - position
-      - velocity
-    allow_nonzero_velocity_at_trajectory_end: true
