@@ -36,8 +36,8 @@
     ],
     "mounts": [
        "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached",
-       //// "source=/dev/dri,target=/dev/dri,type=bind,consistency=cached",
-       //// "source=${localEnv:HOME}${localEnv:USERPROFILE}/.bash_aliases,target=/home/ubuntu/.bash_aliases,type=bind"
+       "source=/dev/dri,target=/dev/dri,type=bind,consistency=cached",
+       "source=${localEnv:HOME}${localEnv:USERPROFILE}/.bash_aliases,target=/home/ubuntu/.bash_aliases,type=bind"
 
     ]
 }
