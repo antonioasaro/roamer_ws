@@ -21,5 +21,3 @@ moveit_simple_controller_manager:
     default: True    
     joints:
       - left_finger_joint
-    action_ns: gripper_cmd
-    default: true
