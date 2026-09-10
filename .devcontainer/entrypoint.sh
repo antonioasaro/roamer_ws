@@ -32,12 +32,6 @@ if [ -n "${WORKSPACE}" ]; then
     else
         echo "Warning: install/setup.bash not found even after build."
     fi
-
-    if [ -f "${WORKSPACE}/howto/howto.aliases" ]; then
-        source "${WORKSPACE}/howto/howto.aliases"
-    else
-        echo "Warning: howto.aliases not found."
-    fi
 else
     echo "Warning: WORKSPACE variable not set."
 fi

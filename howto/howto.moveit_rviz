@@ -1,0 +1,1 @@
+ros2 launch moveit_differential_drive_robot moveit_rviz.launch.py use_sim_time:=true

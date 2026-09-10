@@ -1,2 +1,0 @@
-ros2 launch moveit_differential_drive_robot demo.launch.py 
-
